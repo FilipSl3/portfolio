@@ -45,7 +45,7 @@ export default function Navbar() {
           </a>
 
           {/* Desktop links */}
-          <nav className="hidden items-center gap-1 md:flex">
+          <nav className="hidden items-center gap-1 lg:flex">
             {links.map(([id, label]) => (
               <a
                 key={id}
@@ -68,7 +68,7 @@ export default function Navbar() {
             <a
               href={CONTACT.cv}
               download
-              className="hidden items-center gap-2 whitespace-nowrap rounded-[9px] bg-cv-bg px-[15px] py-[9px] font-sans text-[13px] font-semibold text-cv-fg transition-[transform,box-shadow] hover:-translate-y-px hover:shadow-md md:inline-flex"
+              className="hidden items-center gap-2 whitespace-nowrap rounded-[9px] bg-cv-bg px-[15px] py-[9px] font-sans text-[13px] font-semibold text-cv-fg transition-[transform,box-shadow] hover:-translate-y-px hover:shadow-md lg:inline-flex"
             >
               <Download size={15} />
               {t.cv}
@@ -78,7 +78,7 @@ export default function Navbar() {
               onClick={() => setMenuOpen((m) => !m)}
               aria-label="Menu"
               aria-expanded={menuOpen}
-              className="grid h-[38px] w-[38px] place-items-center rounded-[9px] border border-border bg-surface text-text md:hidden"
+              className="grid h-[38px] w-[38px] place-items-center rounded-[9px] border border-border bg-surface text-text lg:hidden"
             >
               {menuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>

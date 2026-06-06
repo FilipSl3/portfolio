@@ -9,7 +9,7 @@ export default function MobileMenu({ open, links, onClose, cvLabel }) {
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-[89] px-7 pb-10 pt-[100px] backdrop-blur-xl md:hidden"
+          className="fixed inset-0 z-[89] px-7 pb-10 pt-[100px] backdrop-blur-xl lg:hidden"
           style={{ background: "var(--menu-bg)" }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
