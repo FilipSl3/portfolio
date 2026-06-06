@@ -1,0 +1,196 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+   THEME TOKENS
+   :root  -> Light (Alabaster / Zinc-50)
+   .dark  -> Dark  (Zinc-950)
+*/
+:root {
+  --bg: #fafafa;
+  --bg-2: #eef0f2;
+  --surface: #ffffff;
+  --card: #ffffff;
+  --border: rgba(24, 24, 27, 0.08);
+  --border-strong: rgba(24, 24, 27, 0.15);
+  --text: #18181b;
+  --text-2: #52525b;
+  --text-3: #9ca3af;
+  --accent: #2f6bff;
+  --accent-soft: rgba(47, 107, 255, 0.1);
+  --accent-glow: rgba(47, 107, 255, 0.28);
+  --accent-border: rgba(47, 107, 255, 0.3);
+  --hover: rgba(24, 24, 27, 0.05);
+  --media: #eef0f2;
+  --glare: rgba(47, 107, 255, 0.09);
+  --grid: rgba(24, 24, 27, 0.04);
+  --blob-op: 0.13;
+  --cv-bg: #18181b;
+  --cv-fg: #ffffff;
+  --dot-live: #16a34a;
+  --tag-bg: #f4f4f5;
+  --nav-bg: rgba(255, 255, 255, 0.72);
+  --nav-bg-2: rgba(255, 255, 255, 0.9);
+  --menu-bg: rgba(250, 250, 250, 0.97);
+  --sh-sm: 0 1px 2px rgba(16, 24, 40, 0.04), 0 1px 3px rgba(16, 24, 40, 0.05);
+  --sh-md: 0 6px 20px -6px rgba(16, 24, 40, 0.12),
+    0 2px 6px -2px rgba(16, 24, 40, 0.06);
+  --sh-lg: 0 30px 60px -24px rgba(16, 24, 40, 0.22),
+    0 8px 20px -10px rgba(16, 24, 40, 0.1);
+}
+
+.dark {
+  --bg: #09090b;
+  --bg-2: #0c0c0f;
+  --surface: rgba(255, 255, 255, 0.04);
+  --card: rgba(255, 255, 255, 0.04);
+  --border: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --text: #f4f4f5;
+  --text-2: #a1a1aa;
+  --text-3: #71717a;
+  --accent: #4f8cff;
+  --accent-soft: rgba(79, 140, 255, 0.14);
+  --accent-glow: rgba(79, 140, 255, 0.45);
+  --accent-border: rgba(79, 140, 255, 0.35);
+  --hover: rgba(255, 255, 255, 0.05);
+  --media: #0c0c0f;
+  --glare: rgba(255, 255, 255, 0.1);
+  --grid: rgba(255, 255, 255, 0.025);
+  --blob-op: 0.24;
+  --cv-bg: #f4f4f5;
+  --cv-fg: #09090b;
+  --dot-live: #34d399;
+  --tag-bg: rgba(255, 255, 255, 0.055);
+  --nav-bg: rgba(12, 12, 15, 0.6);
+  --nav-bg-2: rgba(12, 12, 15, 0.82);
+  --menu-bg: rgba(9, 9, 11, 0.96);
+  --sh-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --sh-md: 0 12px 32px -14px rgba(0, 0, 0, 0.65);
+  --sh-lg: 0 30px 80px -30px rgba(0, 0, 0, 0.85);
+}
+
+/*
+   BASE
+*/
+@layer base {
+  *,
+  *::before,
+  *::after {
+    /* Smooth theme cross-fade — colors only, never layout properties. */
+    transition: background-color 0.45s ease, border-color 0.45s ease,
+      color 0.4s ease, box-shadow 0.45s ease;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Inter", system-ui, sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: "Space Grotesk", system-ui, sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  ::selection {
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+
+  /* Honor users who ask for less motion: stop the aurora + reveal transforms. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+/*
+   AMBIENT BACKGROUND (Aurora + dot grid)
+*/
+@layer components {
+  .bg-fx {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .bg-fx__aurora {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 170vmax;
+    height: 170vmax;
+    opacity: var(--blob-op);
+    transform: translate3d(-50%, -50%, 0) rotate(0deg);
+    will-change: transform;
+    backface-visibility: hidden;
+    transition: opacity 0.6s ease;
+    background: radial-gradient(
+        circle at 28% 30%,
+        rgba(16, 185, 129, 0.55),
+        transparent 42%
+      ),
+      radial-gradient(circle at 74% 32%, rgba(79, 140, 255, 0.5), transparent 44%),
+      radial-gradient(circle at 60% 78%, rgba(16, 185, 129, 0.4), transparent 46%),
+      radial-gradient(circle at 18% 74%, rgba(79, 140, 255, 0.32), transparent 40%);
+  }
+
+  .bg-fx__grid {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 64px 64px;
+    -webkit-mask-image: radial-gradient(
+      ellipse 90% 60% at 50% 0%,
+      #000 30%,
+      transparent 75%
+    );
+    mask-image: radial-gradient(
+      ellipse 90% 60% at 50% 0%,
+      #000 30%,
+      transparent 75%
+    );
+  }
+
+  /* Cursor glare that follows the pointer over a tilt card. */
+  .glare {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    border-radius: 22px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+    background: radial-gradient(
+      420px circle at var(--mx, 50%) var(--my, 50%),
+      var(--glare),
+      transparent 45%
+    );
+  }
+  .tilt-card:hover .glare {
+    opacity: 1;
+  }
+}
