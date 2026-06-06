@@ -54,10 +54,15 @@ export default function GithubGrid() {
                   ))}
                 </div>
                 {m.link && (
-                  <span className="inline-flex items-center gap-[6px] whitespace-nowrap font-sans text-[12.5px] font-semibold text-accent">
+                    <a
+                    href={m.link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-[6px] whitespace-nowrap font-sans text-[12.5px] font-semibold text-accent transition-opacity hover:opacity-70"
+                  >
                     {t.linkLabels[m.link.label] || m.link.label}
                     <ArrowRight size={13} />
-                  </span>
+                  </a>
                 )}
               </div>
             </motion.div>
